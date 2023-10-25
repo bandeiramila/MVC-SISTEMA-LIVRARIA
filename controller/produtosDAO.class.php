@@ -1,12 +1,27 @@
 <?php
 class ProdutosDAO
 {
-    public function buscaProduto($nome)
+    public function buscaProduto($nome, $orderby, $sentido)
     {
         try {
-            $sql = "SELECT * FROM produto WHERE nome_produto LIKE :nome";
+            $sql = "SELECT * FROM produto";
+            $bindValues = array();
+
+            if (!empty($nome)) {
+                $sql .= " WHERE nome_produto LIKE :nome";
+                $bindValues[':nome'] = "%{$nome}%";
+            }
+
+            if (!empty($orderby)) {
+                $sql .= " ORDER BY $orderby $sentido";
+            }
+
             $p_sql = Conexao::getInstance()->prepare($sql);
-            $p_sql->bindValue(":nome", "%{$nome}%");
+
+            foreach ($bindValues as $param => $value) {
+                $p_sql->bindValue($param, $value);
+            }
+            
             $p_sql->execute();
             $lista = $p_sql->fetchAll(PDO::FETCH_ASSOC);
             return $lista;
