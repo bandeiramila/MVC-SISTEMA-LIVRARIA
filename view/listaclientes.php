@@ -1,6 +1,6 @@
-<?php 
+<?php
     require_once("../model/conexao.class.php");
-    require_once("../controller/produtosDAO.class.php");
+    require_once("../controller/clientesDAO.class.php");
 
     header("Cache-Control: no-cache, no-store, must-revalidate"); //limpa cache
     header("Access-Control-Allow-Origin: *");
@@ -22,11 +22,9 @@
         $sentido = '';
     }
 
-    $dao = new ProdutosDAO();
+    $dao = new ClientesDAO();
 
-    $lista = $dao -> buscaProduto($nome, $ordem, $sentido);
+    $lista = $dao -> buscaCliente($nome, $ordem, $sentido);
 
     $json = json_encode($lista);
     echo $json;
-
-?>
