@@ -8,7 +8,7 @@ class ClientesDAO
             $bindValues = array();
 
             if (!empty($nome)) {
-                $sql .= " WHERE nome_produto LIKE :nome";
+                $sql .= " WHERE nome LIKE :nome";
                 $bindValues[':nome'] = "%{$nome}%";
             }
 
