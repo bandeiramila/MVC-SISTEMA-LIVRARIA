@@ -26,7 +26,7 @@ class ClientesDAO
             $lista = $p_sql->fetchAll(PDO::FETCH_ASSOC);
             return $lista;
         } catch (Exception $e) {
-            echo "Erro ao consultar Produtos: " . $e->getMessage();
+            echo "Erro ao consultar Clientes: " . $e->getMessage();
         }
     }
 
@@ -46,12 +46,12 @@ class ClientesDAO
             $p_sql -> bindValue(":numero", $clientes->getNumero());
 
             if ($p_sql->execute()) {
-                $response['message'] = 'Produto cadastrado com sucesso';
+                $response['message'] = 'Cliente cadastrado com sucesso';
             } else {
-                $response['error'] = 'Erro ao cadastrar o produto';
+                $response['error'] = 'Erro ao cadastrar Cliente';
             }
         } catch (Exception $e) {
-            $response['error'] = 'Erro ao cadastrar produto: ' . $e->getMessage();
+            $response['error'] = 'Erro ao cadastrar Cliente: ' . $e->getMessage();
         }
         
         header("Content-Type: application/json; charset=utf-8");
@@ -110,7 +110,7 @@ class ClientesDAO
             }
             //return $p_sql -> execute();
         } catch (Exception $e) {
-            $response["error"] = "Erro ao remover produto: " . $e->getMessage();
+            $response["error"] = "Erro ao remover cliente: " . $e->getMessage();
         }
         header('Content-Type: application/json; charset=utf-8');
         echo json_encode($response);

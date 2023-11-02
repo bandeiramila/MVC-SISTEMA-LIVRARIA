@@ -21,7 +21,7 @@ class ProdutosDAO
             foreach ($bindValues as $param => $value) {
                 $p_sql->bindValue($param, $value);
             }
-            
+
             $p_sql->execute();
             $lista = $p_sql->fetchAll(PDO::FETCH_ASSOC);
             return $lista;
@@ -49,7 +49,7 @@ class ProdutosDAO
         } catch (Exception $e) {
             $response['error'] = 'Erro ao cadastrar produto: ' . $e->getMessage();
         }
-        
+
         header("Content-Type: application/json; charset=utf-8");
         echo json_encode($response);
     }
@@ -72,7 +72,7 @@ class ProdutosDAO
             }
             //return $p_sql->execute();
             //echo "alterado" . Exception->getMessage();
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             $response['error'] = 'Erro ao alterar produto: ' . $e->getMessage();
         }
         header('Content-Type: application/json; charset=utf-8');
@@ -81,7 +81,7 @@ class ProdutosDAO
 
     public function removerProduto($id)
     {
-        try{
+        try {
             $sql = "DELETE FROM produto WHERE id = :id";
             $p_sql = Conexao::getInstance()->prepare($sql);
             $p_sql->bindValue(":id", $id);
@@ -90,11 +90,4 @@ class ProdutosDAO
             echo "Erro ao remover produto: " . $e->getMessage();
         }
     }
-
-
-
-
 }
-
-
-?>
