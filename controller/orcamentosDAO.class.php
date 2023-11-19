@@ -29,6 +29,34 @@ class OrcamentosDAO
         }
     }
 
+    public function buscaClientesComOrcamentos($cliente, $orderby, $sentido)
+    {
+        try {
+            $sql = "SELECT DISTINCT c.id, c.nome FROM cliente c JOIN orcamento o ON c.id = o.id_cliente ";
+            $bindValues = array();
+
+            if (!empty($cliente)) {
+                $sql .= " WHERE c.nome LIKE :cliente";
+                $bindValues[":cliente"] = "%{$cliente}%";
+            }
+            if (!empty($orderby)) {
+                $sql .= " ORDER BY $orderby $sentido";
+            }
+
+            $p_sql = Conexao::getInstance()->prepare($sql);
+
+            foreach ($bindValues as $param => $value) {
+                $p_sql->bindValue($param, $value);
+            }
+
+            $p_sql->execute();
+            $lista = $p_sql->fetchAll(PDO::FETCH_ASSOC);
+            return $lista;
+        } catch (Exception $e) {
+            echo "Erro ao consultar clientes com orçamentos: " . $e->getMessage();
+        }
+    }
+
     public function inserirOrcamento($clientes)
     {
         try {

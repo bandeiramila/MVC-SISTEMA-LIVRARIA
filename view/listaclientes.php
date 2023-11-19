@@ -21,10 +21,15 @@
     } else {
         $sentido = '';
     }
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
+    } else {
+        $id = '';
+    }
 
     $dao = new ClientesDAO();
 
-    $lista = $dao -> buscaCliente($nome, $ordem, $sentido);
+    $lista = $dao -> buscaCliente($nome, $ordem, $sentido, $id);
 
     $json = json_encode($lista);
     echo $json;

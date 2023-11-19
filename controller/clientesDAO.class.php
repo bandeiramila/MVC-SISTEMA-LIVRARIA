@@ -1,7 +1,7 @@
 <?php
 class ClientesDAO
 {
-    public function buscaCliente($nome, $orderby, $sentido)
+    public function buscaCliente($nome, $orderby, $sentido, $id)
     {
         try {
             $sql = "SELECT * FROM cliente";
@@ -14,6 +14,11 @@ class ClientesDAO
 
             if (!empty($orderby)) {
                 $sql .= " ORDER BY $orderby $sentido";
+            }
+
+            if (!empty($id)) {
+                $sql .= " WHERE id LIKE :id";
+                $bindValues[':id'] = "%{$id}%";
             }
 
             $p_sql = Conexao::getInstance()->prepare($sql);
