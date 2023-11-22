@@ -29,6 +29,31 @@ class Produtos_orcamentoDAO
         }
     }
 
+    public function buscaProdutoOrcamento($id_orcamento, $orderby, $sentido)
+    {
+        try {
+            $sql = "SELECT distinct po.id, po.id_produto, po.id_orcamento, p.nome_produto, po.quantidade, po.valor_unitario from produto p join produtos_orcamento po on p.id = po.id_produto";
+            $bindValues = array();
+
+            if (!empty($id_orcamento)) {
+                $sql .= " where po.id_orcamento like :id";
+                $bindValues[":id"] = "%{$id_orcamento}%";
+            }
+            if (!empty($orderby)) {
+                $sql .= " order by $orderby $sentido";
+            }
+            $p_sql = Conexao::getInstance()->prepare($sql);
+            foreach($bindValues as $param => $value) {
+                $p_sql -> bindValue($param, $value);
+            }
+            $p_sql->execute();
+            $lista = $p_sql->fetchAll(PDO::FETCH_ASSOC);
+            return $lista;
+        } catch (Exception $e) {
+            echo "Erro ao consultar produtos do orçamento: " . $e -> getMessage();
+        }
+    }
+
     public function inserirPO($produtos_orcamento)
     {
         try {

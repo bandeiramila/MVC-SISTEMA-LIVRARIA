@@ -21,10 +21,15 @@
     } else {
         $sentido = '';
     }
+    if (isset($_GET['last_id'])) {
+        $last_id = $_GET['last_id'];
+    } else {
+        $last_id = '';
+    }
 
     $dao = new OrcamentosDAO();
 
-    $lista = $dao -> buscaOrcamento($nome, $ordem, $sentido);
+    $lista = $dao -> buscaOrcamento($nome, $ordem, $sentido, $last_id);
 
     $json = json_encode($lista);
     echo $json;

@@ -1,7 +1,7 @@
 <?php 
 class OrcamentosDAO
 {
-    public function buscaOrcamento($id_cliente, $orderby, $sentido)
+    public function buscaOrcamento($id_cliente, $orderby, $sentido, $last_id)
     {
         try {
             $sql = "SELECT * FROM orcamento";
@@ -13,6 +13,9 @@ class OrcamentosDAO
             }
             if (!empty($orderby)) {
                 $sql .= " ORDER BY $orderby $sentido";
+            }
+            if (!empty($last_id)) {
+                $sql .= " WHERE id_cliente LIKE $last_id ORDER BY id DESC LIMIT 1";
             }
 
             $p_sql = Conexao::getInstance()->prepare($sql);
